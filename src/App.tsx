@@ -10,7 +10,7 @@ import FilterActions from "./components/FilterActions";
 
 const initialParams: SearchParams = {
   sort: "strommedato",
-  review_score: 1,
+  review_score: 0,
   review_count: 0,
 };
 
