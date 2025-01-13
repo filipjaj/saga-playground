@@ -10,7 +10,7 @@ import FilterActions from "./components/FilterActions";
 
 const initialParams: SearchParams = {
   sort: "strommedato",
-  review_score: 0,
+  review_score: 1,
   review_count: 0,
 };
 
@@ -30,6 +30,7 @@ export default function App() {
       filters[key as keyof SearchParams] !==
       initialParams[key as keyof SearchParams]
   );
+
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <div className="min-h-screen bg-background">
