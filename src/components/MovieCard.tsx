@@ -8,19 +8,19 @@ interface MovieCardProps {
 
 export default function MovieCard({ movie }: MovieCardProps) {
   const handleClick = () => {
-    window.open(`https://saga.vg.no/${movie.slug}`, '_blank');
+    window.open(`https://saga.vg.no/show/${movie.slug}`, "_blank");
   };
 
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('no-NO', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
+    return new Date(date).toLocaleDateString("no-NO", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
     });
   };
 
   return (
-    <div 
+    <div
       className="bg-card rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform hover:scale-[1.02]"
       onClick={handleClick}
     >
@@ -35,7 +35,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
         <h3 className="text-lg font-semibold text-card-foreground">
           {movie.title}
         </h3>
-        
+
         <div className="space-y-2 text-sm text-muted-foreground">
           {/* Release Date */}
           <div className="flex items-center gap-2">
