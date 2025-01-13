@@ -13,9 +13,9 @@ interface SearchFormProps {
 
 export default function SearchForm({ params, onParamsChange, onReset }: SearchFormProps) {
   const [dateInputModes, setDateInputModes] = useState({
-    released: false,
-    reviewed: false,
-    vod: false,
+    released: true, // Changed to true for default days ago mode
+    reviewed: true, // Changed to true for default days ago mode
+    vod: true, // Changed to true for default days ago mode
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {

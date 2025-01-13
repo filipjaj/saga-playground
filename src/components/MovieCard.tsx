@@ -7,8 +7,15 @@ interface MovieCardProps {
 }
 
 export default function MovieCard({ movie }: MovieCardProps) {
+  const handleClick = () => {
+    window.open(`https://saga.vg.no/${movie.slug}`, "_blank");
+  };
+
   return (
-    <div className="bg-card rounded-lg shadow-md overflow-hidden">
+    <div
+      className="bg-card rounded-lg shadow-md overflow-hidden cursor-pointer transition-transform hover:scale-[1.02]"
+      onClick={handleClick}
+    >
       <div className="aspect-[2/3] relative">
         <BackendImage
           source={movie.poster}

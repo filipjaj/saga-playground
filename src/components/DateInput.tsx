@@ -31,20 +31,6 @@ export default function DateInput({
     }
   };
 
-  const handleQuickSelect = (days: number) => {
-    onChange(name, '', days.toString());
-  };
-
-  const quickSelectOptions = [
-    { label: 'Today', days: 0 },
-    { label: '1 week', days: 7 },
-    { label: '2 weeks', days: 14 },
-    { label: '1 month', days: 30 },
-    { label: '3 months', days: 90 },
-    { label: '6 months', days: 180 },
-    { label: '1 year', days: 365 },
-  ];
-
   return (
     <div className="space-y-2">
       <div className="flex justify-between items-center">
@@ -60,35 +46,18 @@ export default function DateInput({
       </div>
       
       {useDaysAgo ? (
-        <div className="space-y-2">
-          <div className="flex gap-2">
-            <input
-              type="number"
-              min="0"
-              value={daysValue || '0'}
-              onChange={handleChange}
-              className="flex-1 p-2 border rounded-md bg-background"
-              placeholder="Enter days"
-            />
-            <span className="flex items-center text-sm text-muted-foreground whitespace-nowrap">
-              days ago
-            </span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {quickSelectOptions.map(({ label, days }) => (
-              <Button
-                key={days}
-                variant="outline"
-                size="sm"
-                onClick={() => handleQuickSelect(days)}
-                className={`text-xs ${
-                  daysValue === days.toString() ? 'bg-primary text-primary-foreground' : ''
-                }`}
-              >
-                {label}
-              </Button>
-            ))}
-          </div>
+        <div className="flex gap-2">
+          <input
+            type="number"
+            min="0"
+            value={daysValue || '0'}
+            onChange={handleChange}
+            className="flex-1 p-2 border rounded-md bg-background"
+            placeholder="Enter days"
+          />
+          <span className="flex items-center text-sm text-muted-foreground whitespace-nowrap">
+            days ago
+          </span>
         </div>
       ) : (
         <input

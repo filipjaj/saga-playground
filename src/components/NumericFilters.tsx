@@ -18,10 +18,10 @@ export default function NumericFilters({
     {
       label: "Minimum Review Score",
       name: "review_score" as const,
-      min: 1,
+      min: 0,
       max: 10,
-      step: 0.5,
-      defaultValue: 1,
+      step: 0.1,
+      defaultValue: 0,
     },
     {
       label: "Minimum Review Count",
