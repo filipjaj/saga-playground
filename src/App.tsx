@@ -30,7 +30,6 @@ export default function App() {
       filters[key as keyof SearchParams] !==
       initialParams[key as keyof SearchParams]
   );
-
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       <div className="min-h-screen bg-background">
