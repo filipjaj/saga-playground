@@ -12,6 +12,7 @@ const initialParams: SearchParams = {
   sort: "strommedato",
   review_score: 0,
   review_count: 0,
+  relevant: 1,
 };
 
 export default function App() {

@@ -1,11 +1,21 @@
 export interface SearchParams {
-  type?: 'filmer' | 'serier';
+  type?: "filmer" | "serier";
   providers?: string[];
   genres?: string[];
-  sort?: 'aktuelt' | 'populaert' | 'populaert_nytt' | 'kommende' | 'utgivelsesdato' | 'rating' | 'strommedato' | 'votes' | 'anmelderdato';
+  sort?:
+    | "aktuelt"
+    | "populaert"
+    | "populaert_nytt"
+    | "kommende"
+    | "utgivelsesdato"
+    | "rating"
+    | "strommedato"
+    | "votes"
+    | "anmelderdato";
   rating?: number;
   original_language?: string;
   released_after?: string;
+  relevant?: number;
   released_before?: string;
   released_after_days?: string;
   released_before_days?: string;
@@ -20,5 +30,4 @@ export interface SearchParams {
   review_language?: string;
   review_score?: number;
   review_count?: number;
-  relevant?: boolean;
 }
