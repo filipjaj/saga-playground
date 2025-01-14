@@ -1,21 +1,12 @@
 export interface SearchParams {
+  sort: string;
+  review_score: number;
+  review_count: number;
+  relevant: number;
   type?: "filmer" | "serier";
-  providers?: string[];
-  genres?: string[];
-  sort?:
-    | "aktuelt"
-    | "populaert"
-    | "populaert_nytt"
-    | "kommende"
-    | "utgivelsesdato"
-    | "rating"
-    | "strommedato"
-    | "votes"
-    | "anmelderdato";
-  rating?: number;
+  genres?: string;
   original_language?: string;
   released_after?: string;
-  relevant?: number;
   released_before?: string;
   released_after_days?: string;
   released_before_days?: string;
@@ -27,7 +18,4 @@ export interface SearchParams {
   vod_date_before?: string;
   vod_date_after_days?: string;
   vod_date_before_days?: string;
-  review_language?: string;
-  review_score?: number;
-  review_count?: number;
 }

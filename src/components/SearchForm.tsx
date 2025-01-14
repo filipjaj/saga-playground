@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import NumericFilters from "./NumericFilters";
 import DateInput from "./DateInput";
 import Switch from "./ui/switch";
+import FilterDropdowns from "./FilterDropdowns";
 
 interface SearchFormProps {
   params: SearchParams;
@@ -199,6 +200,13 @@ export default function SearchForm({
       </div>
 
       <NumericFilters params={params} onParamsChange={onParamsChange} />
+
+      <FilterDropdowns
+        type={params.type || ""}
+        genres={params.genres || ""}
+        onTypeChange={(value) => onParamsChange({ ...params, type: value })}
+        onGenresChange={(value) => onParamsChange({ ...params, genres: value })}
+      />
     </div>
   );
 }
