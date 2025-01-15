@@ -13,8 +13,8 @@ const initialParams: SearchParams = {
   review_score: 0,
   review_count: 0,
   relevant: 1,
-  type: "",
-  genre: "",
+  type: undefined,
+  genres: "",
 };
 
 export default function App() {
