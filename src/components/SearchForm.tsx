@@ -22,15 +22,13 @@ import Switch from './ui/switch';
 import { RotateCcw } from 'lucide-react';
 
 interface SearchFormProps {
-  params: SearchParams;
-  onParamsChange: (params: SearchParams) => void;
-  onReset: () => void;
+  filters: SearchParams;
+  onSubmit: (params: SearchParams) => void;
 }
 
 export default function SearchForm({
-  params,
-  onParamsChange,
-  onReset,
+  filters,
+  onSubmit,
 }: SearchFormProps) {
   const [dateMode, setDateMode] = React.useState<Record<string, 'date' | 'days_ago'>>({
     released_after:  'days_ago',
@@ -41,26 +39,26 @@ export default function SearchForm({
     vod_date_before: 'days_ago',
   });
 
-  const handleChange = (
-    name: keyof SearchParams,
-    value: string | number | boolean | undefined
-  ) => {
-    onParamsChange({ ...params, [name]: value });
+  const handleChange = (key: keyof SearchParams, value: any) => {
+    onSubmit({
+      ...filters,
+      [key]: value,
+    });
   };
 
-  const handleMultiSelect = (name: keyof SearchParams) => (values: string[]) => {
-    handleChange(name, values.join(','));
+  const handleMultiSelect = (key: keyof SearchParams) => (values: string[]) => {
+    handleChange(key, values.length > 0 ? values.join(',') : undefined);
   };
 
-  const getSelectedValues = (value: string | undefined): string[] => {
-    return value ? value.split(',').filter(Boolean) : [];
+  const getSelectedValues = (value?: string) => {
+    return value ? value.split(',') : [];
   };
 
   return (
-    <div className="bg-card p-6 rounded-lg shadow-md space-y-6">
+    <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold text-card-foreground">Search Parameters</h2>
-        <Button variant="ghost" onClick={onReset} className="flex items-center gap-2">
+        <Button variant="ghost" onClick={() => onSubmit({})} className="flex items-center gap-2">
           <RotateCcw className="w-4 h-4" />
           Reset Filters
         </Button>
@@ -70,7 +68,7 @@ export default function SearchForm({
         {/* Type Selection */}
         <div className="space-y-2">
           <Label>Type</Label>
-          <Select value={params.type || ''} onValueChange={(value) => handleChange('type', value || undefined)}>
+          <Select value={filters?.type || ''} onValueChange={(value) => handleChange('type', value || undefined)}>
             <SelectTrigger>
               <SelectValue placeholder="Select type" />
             </SelectTrigger>
@@ -87,7 +85,7 @@ export default function SearchForm({
         {/* Sort Selection */}
         <div className="space-y-2">
           <Label>Sort By</Label>
-          <Select value={params.sort || 'aktuelt'} onValueChange={(value) => handleChange('sort', value)}>
+          <Select value={filters?.sort || 'aktuelt'} onValueChange={(value) => handleChange('sort', value)}>
             <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
@@ -101,15 +99,12 @@ export default function SearchForm({
           </Select>
         </div>
 
-
-
-
         {/* Providers */}
         <div className="space-y-2">
           <Label>Providers</Label>
           <MultiSelect
             options={COMMON_PROVIDERS}
-            selected={getSelectedValues(params.providers)}
+            selected={getSelectedValues(filters?.providers)}
             onChange={handleMultiSelect('providers')}
             placeholder="Select providers"
           />
@@ -120,7 +115,7 @@ export default function SearchForm({
           <Label>Genres</Label>
           <MultiSelect
             options={COMMON_GENRES}
-            selected={getSelectedValues(params.genres)}
+            selected={getSelectedValues(filters?.genres)}
             onChange={handleMultiSelect('genres')}
             placeholder="Select genres"
           />
@@ -131,18 +126,17 @@ export default function SearchForm({
           <Label>Original Language</Label>
           <MultiSelect
             options={COMMON_LANGUAGES}
-            selected={getSelectedValues(params.original_language)}
+            selected={getSelectedValues(filters?.original_language)}
             onChange={handleMultiSelect('original_language')}
             placeholder="Select languages"
           />
         </div>
 
-
         <div className="space-y-2">
           <Label>Review Count</Label>
           <Input
             type="number"
-            value={params.review_count || ''}
+            value={filters?.review_count || ''}
             onChange={(e) => handleChange('review_count', e.target.value ? Number(e.target.value) : undefined)}
             min={0}
           />
@@ -152,7 +146,7 @@ export default function SearchForm({
         <div className="space-y-4">
           <Label>Rating</Label>
           <Slider
-            value={[params.rating || MIN_RATING]}
+            value={[filters?.rating || MIN_RATING]}
             onValueChange={([value]) => handleChange('rating', value)}
             min={MIN_RATING}
             max={MAX_RATING}
@@ -164,16 +158,13 @@ export default function SearchForm({
         <div className="space-y-4">
           <Label>Review Score</Label>
           <Slider
-            value={[params.review_score || MIN_RATING]}
+            value={[filters?.review_score || MIN_RATING]}
             onValueChange={([value]) => handleChange('review_score', value)}
             min={MIN_RATING}
             max={MAX_RATING}
             step={0.1}
           />
         </div>
-
-        {/* Review Count */}
-  
       </div>
 
       {/* Date Filters */}
@@ -182,8 +173,8 @@ export default function SearchForm({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <DateFilter
             label="Released After"
-            date={params.released_after}
-            daysAgo={typeof params.released_after_days_ago === 'number' ? params.released_after_days_ago : undefined}
+            date={filters.released_after}
+            daysAgo={typeof filters.released_after_days_ago === 'number' ? filters.released_after_days_ago : undefined}
             onDateChange={(value) => handleChange('released_after', value)}
             onDaysAgoChange={(value) => handleChange('released_after_days_ago', value)}
             mode={dateMode.released_after}
@@ -192,8 +183,8 @@ export default function SearchForm({
 
           <DateFilter
             label="Released Before"
-            date={params.released_before}
-            daysAgo={typeof params.released_before_days_ago === 'number' ? params.released_before_days_ago : undefined}
+            date={filters.released_before}
+            daysAgo={typeof filters.released_before_days_ago === 'number' ? filters.released_before_days_ago : undefined}
             onDateChange={(value) => handleChange('released_before', value)}
             onDaysAgoChange={(value) => handleChange('released_before_days_ago', value)}
             mode={dateMode.released_before}
@@ -202,8 +193,8 @@ export default function SearchForm({
 
           <DateFilter
             label="Reviewed After"
-            date={params.reviewed_after}
-            daysAgo={typeof params.reviewed_after_days_ago === 'number' ? params.reviewed_after_days_ago : undefined}
+            date={filters.reviewed_after}
+            daysAgo={typeof filters.reviewed_after_days_ago === 'number' ? filters.reviewed_after_days_ago : undefined}
             onDateChange={(value) => handleChange('reviewed_after', value)}
             onDaysAgoChange={(value) => handleChange('reviewed_after_days_ago', value)}
             mode={dateMode.reviewed_after}
@@ -212,8 +203,8 @@ export default function SearchForm({
 
           <DateFilter
             label="Reviewed Before"
-            date={params.reviewed_before}
-            daysAgo={typeof params.reviewed_before_days_ago === 'number' ? params.reviewed_before_days_ago : undefined}
+            date={filters.reviewed_before}
+            daysAgo={typeof filters.reviewed_before_days_ago === 'number' ? filters.reviewed_before_days_ago : undefined}
             onDateChange={(value) => handleChange('reviewed_before', value)}
             onDaysAgoChange={(value) => handleChange('reviewed_before_days_ago', value)}
             mode={dateMode.reviewed_before}
@@ -222,8 +213,8 @@ export default function SearchForm({
 
           <DateFilter
             label="VOD Date After"
-            date={params.vod_date_after}
-            daysAgo={typeof params.vod_date_after_days_ago === 'number' ? params.vod_date_after_days_ago : undefined}
+            date={filters.vod_date_after}
+            daysAgo={typeof filters.vod_date_after_days_ago === 'number' ? filters.vod_date_after_days_ago : undefined}
             onDateChange={(value) => handleChange('vod_date_after', value)}
             onDaysAgoChange={(value) => handleChange('vod_date_after_days_ago', value)}
             mode={dateMode.vod_date_after}
@@ -232,8 +223,8 @@ export default function SearchForm({
 
           <DateFilter
             label="VOD Date Before"
-            date={params.vod_date_before}
-            daysAgo={typeof params.vod_date_before_days_ago === 'number' ? params.vod_date_before_days_ago : undefined}
+            date={filters.vod_date_before}
+            daysAgo={typeof filters.vod_date_before_days_ago === 'number' ? filters.vod_date_before_days_ago : undefined}
             onDateChange={(value) => handleChange('vod_date_before', value)}
             onDaysAgoChange={(value) => handleChange('vod_date_before_days_ago', value)}
             mode={dateMode.vod_date_before}
@@ -246,11 +237,11 @@ export default function SearchForm({
       <div className="flex items-center space-x-2">
         <Switch
           label="Relevant"
-          checked={params.relevant}
+          checked={filters.relevant}
           onCheckedChange={(checked) => handleChange('relevant', checked)}
         />
         <Label>Relevant</Label>
       </div>
-    </div>
+    </form>
   );
 }

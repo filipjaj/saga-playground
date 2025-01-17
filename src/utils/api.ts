@@ -1,8 +1,6 @@
 import { SearchParams, TVGuide } from "../types/api";
 
-const API_BASE_URL = "https://tvguide.vg.no/backend/api";
-
-export async function fetchMovies(params: SearchParams): Promise<TVGuide> {
+export async function fetchMovies(params: SearchParams, baseUrl: string): Promise<TVGuide> {
   const searchParams = new URLSearchParams();
 
   // Process date parameters
@@ -15,7 +13,7 @@ export async function fetchMovies(params: SearchParams): Promise<TVGuide> {
   });
 
   const response = await fetch(
-    `${API_BASE_URL}/titles?${searchParams.toString()}`
+    `${baseUrl}/titles?${searchParams.toString()}`
   );
 
   if (!response.ok) {

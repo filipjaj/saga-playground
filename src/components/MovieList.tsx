@@ -26,7 +26,7 @@ export default function MovieList({
   fetchNextPage,
 }: MovieListProps) {
   const loadMoreRef = React.useRef<HTMLDivElement>(null);
-
+console.log(data)
   useIntersectionObserver({
     target: loadMoreRef,
     onIntersect: fetchNextPage,

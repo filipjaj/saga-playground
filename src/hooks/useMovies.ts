@@ -3,11 +3,18 @@ import { TVGuide } from "../types/api";
 import { fetchMovies } from "../utils/api";
 import { SearchParams } from "@/features/search/types";
 import { toAPISearchParams } from "@/utils/search-params";
+import { useAPIEnvironment } from "@/context/api-environment";
 
 export function useMovies(params: SearchParams) {
-  return useInfiniteQuery({
-    queryKey: ["movies", params],
-    queryFn: ({ pageParam = 1 }) => fetchMovies(toAPISearchParams({ ...params, page: pageParam })),
+  const { baseUrl } = useAPIEnvironment();
+  
+  return useInfiniteQuery<TVGuide, Error, TVGuide, unknown[], number>({
+    queryKey: ["movies", params, baseUrl],
+    queryFn: ({ pageParam = 1 }) => 
+      fetchMovies(
+        toAPISearchParams({ ...params, page: pageParam }),
+        baseUrl
+      ),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       if (!lastPage.meta) return undefined;
