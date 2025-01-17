@@ -8,13 +8,27 @@ export interface SearchParams {
   original_language?: string;
   released_after?: string;
   released_before?: string;
-  released_days_agos?: string;
-
+  released_after_days_ago?: number;
+  released_before_days_ago?: number;
   reviewed_after?: string;
   reviewed_before?: string;
-  reviewed__days_ago?: string;
-
+  reviewed_after_days_ago?: number;
+  reviewed_before_days_ago?: number;
   vod_date_after?: string;
   vod_date_before?: string;
-  vod_date_days_ago?: string;
+  vod_date_after_days_ago?: number;
+  vod_date_before_days_ago?: number;
+  page?: number;
+}
+
+export interface TVGuide {
+  meta?: {
+    current_page: number;
+    last_page: number;
+  };
+  data: Array<{
+    id: string;
+    title: string;
+    // Add other movie/show properties as needed
+  }>;
 }

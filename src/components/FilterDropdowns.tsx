@@ -1,12 +1,12 @@
 interface FilterDropdownsProps {
-  type: "" | "filmer" | "serier";
+  type: "all" | "filmer" | "serier";
   genres: string;
-  onTypeChange: (value: "" | "filmer" | "serier") => void;
+  onTypeChange: (value: "all" | "filmer" | "serier") => void;
   onGenresChange: (value: string) => void;
 }
 
 const types = [
-  { value: "", label: "Alle typer" },
+  { value: "all", label: "Alle typer" },
   { value: "filmer", label: "Filmer" },
   { value: "serier", label: "Serier" },
 ];

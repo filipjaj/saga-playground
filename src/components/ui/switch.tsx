@@ -4,47 +4,38 @@ import { useState } from "react";
 
 interface SwitchProps {
   label: string;
-  initialState?: boolean;
-  onChange?: (isChecked: boolean) => void;
+  checked?: boolean;
+  onCheckedChange?: (checked: boolean) => void;
 }
 
 export default function Switch({
   label,
-  initialState = false,
-  onChange,
+  checked = false,
+  onCheckedChange,
 }: SwitchProps) {
-  const [isChecked, setIsChecked] = useState(initialState);
-
   const toggleSwitch = () => {
-    const newState = !isChecked;
-    setIsChecked(newState);
-    if (onChange) {
-      onChange(newState);
+    if (onCheckedChange) {
+      onCheckedChange(!checked);
     }
   };
 
   return (
     <label className="flex items-center cursor-pointer">
-      <div className="relative">
-        <input
-          type="checkbox"
-          className="sr-only"
-          checked={isChecked}
-          onChange={toggleSwitch}
-          aria-checked={isChecked}
-          aria-label={label}
+      <button
+        type="button"
+        role="switch"
+        aria-checked={checked}
+        onClick={toggleSwitch}
+        className={`${
+          checked ? 'bg-blue-600' : 'bg-gray-200'
+        } relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2`}
+      >
+        <span
+          className={`${
+            checked ? 'translate-x-6' : 'translate-x-1'
+          } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
         />
-        <div
-          className={`block w-14 h-8 rounded-full transition-colors duration-300 ease-in-out ${
-            isChecked ? "bg-blue-600" : "bg-gray-300"
-          }`}
-        ></div>
-        <div
-          className={`absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition-transform duration-300 ease-in-out ${
-            isChecked ? "transform translate-x-full" : "transform translate-x-0"
-          }`}
-        ></div>
-      </div>
+      </button>
       <div className="ml-3 text-gray-700 font-medium">{label}</div>
     </label>
   );

@@ -1,11 +1,13 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { SearchParams, TVGuide } from "../types/api";
+import { TVGuide } from "../types/api";
 import { fetchMovies } from "../utils/api";
+import { SearchParams } from "@/features/search/types";
+import { toAPISearchParams } from "@/utils/search-params";
 
 export function useMovies(params: SearchParams) {
-  return useInfiniteQuery<TVGuide>({
+  return useInfiniteQuery({
     queryKey: ["movies", params],
-    queryFn: ({ pageParam = 1 }) => fetchMovies({ ...params, page: pageParam }),
+    queryFn: ({ pageParam = 1 }) => fetchMovies(toAPISearchParams({ ...params, page: pageParam })),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       if (!lastPage.meta) return undefined;
