@@ -66,12 +66,24 @@ export const COMMON_LANGUAGES: FilterOption[] = [
 
 // Common genres (this should be fetched from the API in a real implementation)
 export const COMMON_GENRES: FilterOption[] = [
-  { value: 'action', label: 'Action' },
-  { value: 'comedy', label: 'Comedy' },
-  { value: 'drama', label: 'Drama' },
-  { value: 'documentary', label: 'Documentary' },
-  { value: 'horror', label: 'Horror' },
-  { value: 'thriller', label: 'Thriller' }
+  { value: "drama", label: "Drama" },
+  { value: "komedie", label: "Komedie" },
+  { value: "thriller", label: "Thriller" },
+  { value: "action", label: "Action" },
+  { value: "eventyr", label: "Eventyr" },
+  { value: "sci-fi", label: "Sci-fi" },
+  { value: "animasjon", label: "Animasjon" },
+  { value: "barn-og-familie", label: "Barn og familie" },
+  { value: "romantikk", label: "Romantikk" },
+  { value: "fantasy", label: "Fantasy" },
+  { value: "western", label: "Western" },
+  { value: "musikal", label: "Musikal" },
+  { value: "skrekk", label: "Skrekk" },
+  { value: "dokumentar", label: "Dokumentar" },
+  { value: "reality", label: "Reality" },
+  { value: "talkshow", label: "Talkshow" },
+  { value: "nyheter", label: "Nyheter" },
+  { value: "sport", label: "Sport" },
 ];
 
 // Common providers (this should be fetched from the API in a real implementation)
