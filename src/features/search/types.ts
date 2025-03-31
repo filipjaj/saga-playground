@@ -1,9 +1,18 @@
 export interface SearchParams {
-  type?: "all" | "filmer" | "serier";
+  type?: "filmer" | "serier";
   providers?: string;
   genres?: string;
   person?: string;
-  sort?: "aktuelt" | "populaert" | "populaert_nytt" | "kommende" | "utgivelsesdato" | "rating" | "strommedato" | "votes" | "anmelderdato";
+  sort?:
+    | "aktuelt"
+    | "populaert"
+    | "populaert_nytt"
+    | "kommende"
+    | "utgivelsesdato"
+    | "rating"
+    | "strommedato"
+    | "votes"
+    | "anmelderdato";
   rating?: number;
   per_page?: number;
   pagination?: "simple" | "full";
@@ -12,7 +21,7 @@ export interface SearchParams {
   review_score?: number;
   review_count?: number;
   relevant?: boolean;
-  
+
   // Date filters
   released_after?: string;
   released_after_days_ago?: number;
@@ -36,7 +45,7 @@ export interface Movie {
   // Add other movie properties as needed
 }
 
-export type SortOption = SearchParams['sort'];
+export type SortOption = SearchParams["sort"];
 
 export interface DateInputMode {
   released: boolean;

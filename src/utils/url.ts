@@ -3,15 +3,15 @@ import { INITIAL_SEARCH_PARAMS } from "@/features/search/constants";
 
 // Helper to check if a value is a comma-separated list
 const isArrayValue = (key: keyof SearchParams) => {
-  return ['providers', 'genres', 'original_language'].includes(key);
+  return ["providers", "genres", "original_language"].includes(key);
 };
 
 // Helper to check if a value is a days_ago field
 const isDaysAgoField = (key: string): boolean => {
-  return key.endsWith('_days_ago');
+  return key.endsWith("_days_ago");
 };
 const isOldDaysAgoField = (key: string): boolean => {
-  return key.endsWith('_days');
+  return key.endsWith("_days");
 };
 
 // Convert filter state to URL parameters
@@ -19,15 +19,21 @@ export function filtersToUrl(filters: SearchParams): string {
   const searchParams = new URLSearchParams();
 
   Object.entries(filters).forEach(([key, value]) => {
-    if (value !== undefined && value !== null && value !== '') {
-      if (typeof value === 'boolean') {
-        searchParams.append(key, value ? '1' : '0');
-      } else if (isArrayValue(key as keyof SearchParams) && typeof value === 'string') {
+    if (value !== undefined && value !== null && value !== "") {
+      if (typeof value === "boolean") {
+        searchParams.append(key, value ? "1" : "0");
+      } else if (
+        isArrayValue(key as keyof SearchParams) &&
+        typeof value === "string"
+      ) {
         searchParams.append(key, value);
-      } else if (isDaysAgoField(key) && typeof value === 'number') {
+      } else if (isDaysAgoField(key) && typeof value === "number") {
         searchParams.append(key, value.toString());
-      } else if (isOldDaysAgoField(key) && typeof value === 'number') {
-        searchParams.append(key.replace('_days', '_days_ago'), value.toString());
+      } else if (isOldDaysAgoField(key) && typeof value === "number") {
+        searchParams.append(
+          key.replace("_days", "_days_ago"),
+          value.toString()
+        );
         searchParams.delete(key);
       } else {
         searchParams.append(key, value.toString());
@@ -51,7 +57,6 @@ export function urlToFilters(searchParams: URLSearchParams): SearchParams {
 
   // Parse each parameter
   for (const [key, value] of searchParams.entries()) {
-    
     if (!value) continue;
 
     if (isDaysAgoField(key)) {
@@ -62,23 +67,34 @@ export function urlToFilters(searchParams: URLSearchParams): SearchParams {
     switch (key) {
       case "review_score":
       case "review_count":
-        
+
       case "rating":
         filters[key] = parseNumeric(value);
         break;
       case "relevant":
-        filters[key] = value === '1';
+        filters[key] = value === "1";
         break;
       case "sort":
-        if (value === "aktuelt" || value === "populaert" || value === "populaert_nytt" || 
-            value === "kommende" || value === "utgivelsesdato" || value === "rating" || 
-            value === "strommedato" || value === "votes" || value === "anmelderdato") {
+        if (
+          value === "aktuelt" ||
+          value === "populaert" ||
+          value === "populaert_nytt" ||
+          value === "kommende" ||
+          value === "utgivelsesdato" ||
+          value === "rating" ||
+          value === "strommedato" ||
+          value === "votes" ||
+          value === "anmelderdato"
+        ) {
           filters[key] = value;
         }
         break;
       case "type":
-        if (value === "filmer" || value === "serier" || value === "all") {
+        if (value === "filmer" || value === "serier") {
           filters[key] = value;
+        }
+        if (value === "all") {
+          filters[key] = undefined;
         }
         break;
       case "released_after":
@@ -95,7 +111,7 @@ export function urlToFilters(searchParams: URLSearchParams): SearchParams {
       case "reviewed_after_days":
       case "vod_date_before_days":
       case "vod_date_after_days":
-        const newKey = key.replace('_days', '_days_ago');
+        const newKey = key.replace("_days", "_days_ago");
         console.log(newKey);
         filters[newKey] = parseNumeric(value);
         filters[key] = undefined;
@@ -119,6 +135,6 @@ export async function copyUrlToClipboard(): Promise<void> {
   try {
     await navigator.clipboard.writeText(window.location.href);
   } catch (error) {
-    console.error('Failed to copy URL:', error);
+    console.error("Failed to copy URL:", error);
   }
 }

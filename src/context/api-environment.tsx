@@ -4,6 +4,8 @@ import { APIEnvironment, API_URLS } from "@/config/api";
 interface APIEnvironmentContextType {
   environment: APIEnvironment;
   setEnvironment: (env: APIEnvironment) => void;
+  customUrl: string;
+  setCustomUrl: (url: string) => void;
   baseUrl: string;
 }
 
@@ -11,11 +13,16 @@ const APIEnvironmentContext = createContext<APIEnvironmentContextType | undefine
 
 export function APIEnvironmentProvider({ children }: { children: React.ReactNode }) {
   const [environment, setEnvironment] = useState<APIEnvironment>("production");
+  const [customUrl, setCustomUrl] = useState<string>("");
+
+  const baseUrl = environment === "custom" ? customUrl : API_URLS[environment];
 
   const value = {
     environment,
     setEnvironment,
-    baseUrl: API_URLS[environment],
+    customUrl,
+    setCustomUrl,
+    baseUrl,
   };
 
   return (

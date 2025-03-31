@@ -1,0 +1,30 @@
+# Lessons
+- The API environment system can be extended to support custom URLs by adding a "custom" value to the API_URLS object
+- The UI for environment selection can be changed from a simple toggle to a dropdown with custom input option
+- Custom state needs to be maintained in context for user-provided values
+- UI components should provide clear visual feedback for validation states
+- Form inputs with validation should include helpful error messages
+- Tooltips can provide additional context for UI actions without cluttering the interface
+- Using Card components helps organize related UI elements in a visually appealing way
+- Icons help users quickly identify different options in a dropdown
+
+# Scratchpad
+## Custom API URL Implementation Task
+[X] Analyze the current implementation of API environment toggle and context
+[X] Add "custom" option to API_URLS in config/api.ts
+[X] Update APIEnvironmentContext to support custom URL state
+[X] Enhance APIEnvironmentToggle component with dropdown and custom URL input
+[X] Test the implementation (this step needs to be verified by the user)
+
+Task completed: Modified the API environment toggle to support custom API URLs, allowing users to switch between Production, Beta, and Custom environments with a dropdown selector. When "Custom" is selected, an input field appears where users can enter their own API URL.
+
+## UI/UX Improvement Task
+[X] Add Card component for better organization
+[X] Implement environment-specific icons
+[X] Add URL validation with visual feedback
+[X] Create save button with tooltips and status indicators
+[X] Add confirmation messages for current API state
+[X] Install necessary dependencies (@radix-ui/react-tooltip)
+[X] Create required UI components (Card, Tooltip)
+
+Task completed: Enhanced the API Environment Toggle with a significantly improved UI/UX that includes validation, better visual organization, clear feedback, and a more professional appearance.
